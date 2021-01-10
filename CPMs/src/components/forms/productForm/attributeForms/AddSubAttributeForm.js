@@ -1,25 +1,19 @@
 import React from 'react';
-import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
-import { TreeSelect } from 'antd';
-import Modal from '../../UI/Modal'
-import MyButton from '../../UI/Button';
+import Modal from '../../../UI/Modal'
+import MyButton from '../../../UI/Button';
 
 import {
   Form,
-  Upload,
   Input,
   Tooltip,
   Typography,
   Select,
-  Checkbox,
-  Divider,
    Button
 } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import AddCategoryForm from './AddCategoryFrom';
-const { OptGroup} = Select;
+import AddAttributeForm from './AddAttributeFrom';
 const { Title } = Typography;
-const { TreeNode } = TreeSelect;
+
 
 const formItemLayout = {
   labelCol: {
@@ -53,16 +47,6 @@ const tailFormItemLayout = {
 };
 const { Option } = Select;
 
-let index = 0;
-const normFile = (e) => {
-  console.log('Upload event:', e);
-
-  if (Array.isArray(e)) {
-    return e;
-  }
-
-  return e && e.fileList;
-};
 
 class AddSubCategoryForm extends React.Component {
   formRef = React.createRef();
@@ -104,27 +88,27 @@ class AddSubCategoryForm extends React.Component {
 
 render(){
   
-  const { items, name } = this.state;
+  const { items} = this.state;
   return (
     <Form
       {...formItemLayout}
       ref={this.formRef} 
-      name="Add_Product"
+      name="Add_Sub_Attribute"
       onFinish={this.onFinish}
       scrollToFirstError
     >
-      <Title style={{textAlign:"center",padding:'10px'}}>Add Sub-Category Form</Title>
+      <Title style={{textAlign:"center",padding:'10px'}}>Add Sub-Attribute Form</Title>
 
  
       
       <Form.Item
-        name="Category"
-        label="Category"
-        content="Select Category"
+        name="Sub-Attribute"
+        label="Sub-Attribute"
+        content="Select Sub-Attribute"
         rules={[
           {
             required: true,
-            message: 'Please Select Category!',
+            message: 'Please Select Sub-Attribute!',
            
           },
         ]}
@@ -132,13 +116,13 @@ render(){
       >
          <Select
         virtual={true}
-        placeholder="Please Select Category"
+        placeholder="Please Select Sub-Attribute"
         open={this.state.isboxOpen}
         dropdownRender={menu => (
           <div>
             {menu}
-            <MyButton style={{margin:'20px'}} type="primary" content="Add Category" onClick={this.showModal}/>
-            <Modal footer={null} name={"Add Category"} centered={true} visible={this.state.isOpen} onCancel={this.closeModal} title="Add Category" content={<AddCategoryForm/>}/> 
+            <MyButton style={{margin:'20px'}} type="primary" content="Add Attribute" onClick={this.showModal}/>
+            <Modal footer={null} name={"Add Attribute"} centered={true} visible={this.state.isOpen} onCancel={this.closeModal} title="Add Attribute" content={<AddAttributeForm/>}/> 
           </div>
         )}
       >
@@ -150,11 +134,11 @@ render(){
           
 
       <Form.Item
-        name="Sub-Category Name"
+        name="Sub-Attribute Name"
         label={
           <span>
-            Sub-Category Name&nbsp;
-            <Tooltip title="Add Sub-Category name">
+            Sub-Attribute Name&nbsp;
+            <Tooltip title="Add Sub-Attribute name">
               <QuestionCircleOutlined />
             </Tooltip>
           </span>
@@ -162,19 +146,19 @@ render(){
         rules={[
           {
             required: true,
-            message: 'Please Sub-Category Name!',
+            message: 'Please Sub-Attribute Name!',
             whitespace: true,
           },
         ]}
       >
-        <Input  placeholder="Please Enter Sub-Category Name"/>
+        <Input  placeholder="Please Enter Sub-Attribute Name"/>
       </Form.Item>
      
 
 
       <Form.Item {...tailFormItemLayout}>
         <Button type="primary" htmlType="submit">
-          Add Sub-Category
+          Add Sub-Attribute
         </Button>
       </Form.Item>
     </Form>

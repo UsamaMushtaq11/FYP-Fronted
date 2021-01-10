@@ -18,8 +18,8 @@ import {
    Button
 } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import AddCategoryForm from './AddCategoryFrom';
-import AddSubCategoryForm from './AddSubCategoryForm';
+import AddCategoryForm from './categoryForms/AddCategoryFrom';
+import AddSubCategoryForm from './categoryForms/AddSubCategoryForm';
 const { OptGroup} = Select;
 const { Title } = Typography;
 const { TreeNode } = TreeSelect;
@@ -79,7 +79,8 @@ class AddProductForm extends React.Component {
     CategoryData:{
       Category:["Men","Women","Mobile"],
       SubCategory:[["Watch","Glasses","Perfume"],["Perfume","Glasses"],["I-Phone","Android","Samsung","OPPO","LG","Infinix","One-Plus"]]
-    }
+    },
+    pType:'',
   };
   onNameChange = event => {
     this.setState({
@@ -128,13 +129,16 @@ class AddProductForm extends React.Component {
   onFinish = (values) => {
     console.log(values);
   };
-  
-
 
 
 
 render(){
-  
+  const handleChange=(value)=>{
+    console.log(value);
+    this.setState({ pType:value });// { value: "lucy", key: "lucy", label: "Lucy (101)" }
+  }
+ 
+
   const { items, name } = this.state;
   return (
     <Form
@@ -272,7 +276,7 @@ render(){
       </Select>
       </Form.Item>
           
-     
+      
 
 <Form.Item
         name="upload"
@@ -309,7 +313,7 @@ render(){
                  message: 'Product Type is required' },
             ]}
           >
-            <Select  placeholder="Select Product Type" >
+            <Select  placeholder="Select Product Type" onChange={handleChange}>
             <OptGroup value="pTypes" label="Product Types">
             <Option value="simple">Simple</Option>
             <Option value="variation">Variation</Option>
@@ -321,6 +325,118 @@ render(){
             </Select>
           </Form.Item>
     
+    {this.state.pType ?
+     this.state.pType==="simple" ? this.state.pType.concat(" form Content") :
+     this.state.pType==="variation" ?this.state.pType.concat(" form Content"):
+     this.state.pType==="grouped" ? 
+     <>
+     <Form.Item
+     name="grouped"
+     label="Products For Group"
+     content="Choose Products For Group"
+     rules={[
+       {
+         required: true,
+         message: 'Please Select Products!',
+        
+       },
+     ]}
+    
+   >
+      <Select
+     mode="multiple"
+     placeholder="Please Select Products"
+     dropdownRender={menu => (
+       <div>
+         {menu}
+     
+       </div>
+     )}
+   >
+     {items.map(item => (
+       <Option key={item}>{item}</Option>
+     ))}
+   </Select>
+   </Form.Item>
+    <Form.Item
+    name="Group Name"
+    label={
+      <span>
+        Group Name&nbsp;
+        <Tooltip title="Add you group name">
+          <QuestionCircleOutlined />
+        </Tooltip>
+      </span>
+    }
+    rules={[
+      {
+        required: true,
+        message: 'Please Enter group Name!',
+        whitespace: true,
+      },
+    ]}
+  >
+    <Input  placeholder="Please Enter Group Name"/>
+  </Form.Item>
+  </>
+   :
+     this.state.pType==="bundle" ?  <>
+     <Form.Item
+     name="Bundle"
+     label="Products For Bundle"
+     content="Choose Products For Bundle"
+     rules={[
+       {
+         required: true,
+         message: 'Please Select Products!',
+        
+       },
+     ]}
+    
+   >
+      <Select
+     mode="multiple"
+     placeholder="Please Select Products"
+     dropdownRender={menu => (
+       <div>
+         {menu}
+     
+       </div>
+     )}
+   >
+     {items.map(item => (
+       <Option key={item}>{item}</Option>
+     ))}
+   </Select>
+   </Form.Item>
+    <Form.Item
+    name="Bundle Name"
+    label={
+      <span>
+       Bundle Name&nbsp;
+        <Tooltip title="Add you bundle name">
+          <QuestionCircleOutlined />
+        </Tooltip>
+      </span>
+    }
+    rules={[
+      {
+        required: true,
+        message: 'Please Enter bundle Name!',
+        whitespace: true,
+      },
+    ]}
+  >
+    <Input  placeholder="Please Enter bundle Name"/>
+  </Form.Item>
+  </>
+     
+     
+     
+     :'' 
+    
+    : ''}
+     
       <Form.Item
         name="agreement"
         valuePropName="checked"

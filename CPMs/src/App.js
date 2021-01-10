@@ -1,22 +1,22 @@
 import React from 'react';
 import './App.css';
 import { Layout} from 'antd';
-import Sider from './components/layout/Sider';
 import Header from './components/layout/header';
 import Content from './components/layout/Content';
 import Footer from './components/layout/Footer';
-
+import {BrowserRouter} from 'react-router-dom';
 
 
 
 function App() {
 
   return (
+    <BrowserRouter>
     <div className="App">
-      <Layout>
+      
+      <Layout  style={{minheight:"100vh"}}>
    <Header/>
         <Layout>
-          <Sider/>
           <Layout>
            <Content/>
             <Footer/>
@@ -24,6 +24,7 @@ function App() {
         </Layout>
       </Layout>
     </div>
+    </BrowserRouter>
   );
 }
 
